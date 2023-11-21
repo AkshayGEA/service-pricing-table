@@ -221,38 +221,6 @@
       let popupContect = document.getElementById("popupContect");
       let validCode = false;
 
-      function openPopup(isModuleIncluded, isAuthorized, isYearly, onlyModule) {
-        // Determine the correct links based on the user's selections
-        let partsLink = isAuthorized
-          ? "https://forms.smarthqpro.com/aparts"
-          : "https://forms.smarthqpro.com/parts";
-        let creditCardLink;
-        if (onlyModule) {
-          creditCardLink = isAuthorized
-            ? "https://buy.stripe.com/eVa5nX1x5dk74pObJ2"
-            : "https://buy.stripe.com/7sI6s17VtbbZbSgfZh";
-        } else if (isModuleIncluded) {
-          if (isYearly && isAuthorized) {
-            creditCardLink = "https://buy.stripe.com/dR62bLb7F3Jx4pObIU";
-          } else if (isYearly && !isAuthorized) {
-            creditCardLink = "https://buy.stripe.com/4gw8A98Zx7ZN9K800a";
-          } else if (!isYearly && isAuthorized) {
-            creditCardLink = "https://buy.stripe.com/28o6s1grZ2Ft4pOcN4";
-          } else {
-            creditCardLink = "https://buy.stripe.com/6oE6s1fnVa7V7C04gt";
-          }
-        } else {
-          if (isYearly && isAuthorized) {
-            creditCardLink = "https://buy.stripe.com/eVaaIhb7FeobbSgfZl";
-          } else if (isYearly && !isAuthorized) {
-            creditCardLink = "https://buy.stripe.com/fZebMlb7Ffsf9K89AV";
-          } else if (!isYearly && isAuthorized) {
-            creditCardLink = "https://buy.stripe.com/eVa2bL2B96VJ8G4dRe";
-          } else {
-            creditCardLink = "https://buy.stripe.com/00g8A98Zxdk71dC4gC";
-          }
-        }
-
         popupContect.innerHTML = `<h3>Payment Options</h3><a id="creditCard"><button id="creditCard">Pay by Credit Card</button></a><a id="partsAccount"><button id="partsAccount">Pay by Parts Account</button></ a>`;
 
         // Update the popup with the correct links
@@ -287,6 +255,18 @@
         document.querySelector(".popup").style.display = "none";
         document.querySelector(".popup-overlay").style.display = "none";
       }
+
+      function handleBuyNowClick(isModuleIncluded, isAuthorized, isYearly, onlyModule) {
+    // Define the Stripe links based on authorization status
+    let stripeLinkAuthorized = "https://buy.stripe.com/eVa5nX1x5dk74pObJ2";
+    let stripeLinkNonAuthorized = "https://buy.stripe.com/7sI6s17VtbbZbSgfZh";
+
+    // Determine the correct link based on authorization status
+    let stripeLink = isAuthorized ? stripeLinkAuthorized : stripeLinkNonAuthorized;
+
+    // Redirect to the selected Stripe payment link
+    window.location.href = stripeLink;
+}
 
       function generateTable() {
         let company = companySelect.value;
@@ -341,28 +321,13 @@
                         </div>
                     `;
 
-        document
-          .getElementById("sButton")
-          .addEventListener("click", function (event) {
-            event.preventDefault(); // Prevents default link behavior
-            let isModuleIncluded = module === "no";
-            let onlyModule = false;
-            let isAuthorized = validCode; //company === "yes";
-            let isYearly = !monthly;
-            openPopup(isModuleIncluded, isAuthorized, isYearly, onlyModule);
-          });
+        document.getElementById("sButton").addEventListener("click", function() {
+    handleBuyNowClick(module === "no", validCode, planSelect.value !== "monthly", false);
+});
 
-        document
-          .getElementById("mButton")
-          .addEventListener("click", function (event) {
-            event.preventDefault(); // Prevents default link behavior
-            let isModuleIncluded = module === "no";
-            let onlyModule = true;
-            let isAuthorized = validCode; //company === "yes";
-            let isYearly = !monthly;
-            openPopup(isModuleIncluded, isAuthorized, isYearly, onlyModule);
-          });
-
+document.getElementById("mButton").addEventListener("click", function() {
+    handleBuyNowClick(module === "no", validCode, planSelect.value !== "monthly", true);
+});
         if (company === "yes" && !validCode) {
           openAuthPopup();
         }
