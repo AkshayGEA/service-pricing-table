@@ -267,22 +267,27 @@
       }
 
 function updateModuleBuyLink() {
-    let isAuthorized = validCode; // or companySelect.value === "yes" if you want to base it on dropdown selection
+    let isAuthorized = validCode; // Determine authorization status
     let buyNowLink = isAuthorized
         ? "https://buy.stripe.com/eVa5nX1x5dk74pObJ2" // Link for authorized users
         : "https://buy.stripe.com/7sI6s17VtbbZbSgfZh"; // Link for non-authorized users
+
+    // Get the "Buy Now" button for the replacement module
     let buyNowButton = document.getElementById("mButton");
+
     if (buyNowButton) {
         if (buyNowButtonClickListener) {
             buyNowButton.removeEventListener("click", buyNowButtonClickListener);
         }
+
         buyNowButtonClickListener = function(event) {
-            event.preventDefault();
-            window.location.href = buyNowLink;
+            event.preventDefault(); // Prevent default button behavior
+            window.location.href = buyNowLink; // Redirect to the Stripe link
         };
         buyNowButton.addEventListener("click", buyNowButtonClickListener);
     }
 }
+
 
       function openAuthPopup(isModuleIncluded, isAuthorized, isYearly) {
         popupContect.innerHTML = `<h3>Input your Service Number</h3><input id="code" type="text" placeholder="Authorised Service Number"><span id="errorSpan" class="error"></span><div class="popup-button-div"><button id="submit">Submit</button><button id="cancel" style="background-color: black;">Cancel</button></ div>`;
