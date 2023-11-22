@@ -312,76 +312,60 @@ function updateModuleBuyLink() {
         document.querySelector(".popup-overlay").style.display = "none";
       }
 
-      function generateTable() {
-        let company = companySelect.value;
-        let module = moduleSelect.value;
-        let monthly = planSelect.value === "monthly";
-        let modulePrice = company === "yes" ? 99 : 199;
-        let subscriptionPrice =
-          (company === "yes" ? 40 : 50) * (monthly ? 1 : 12);
-        let moduleImgSrc =
-          module === "yes"
-            ? "https://uploads-ssl.webflow.com/61d5fc96029694ef0cf8f249/63ff0b4f20f51d2091c6f26a_SmartHQ%20Pro%20Interface-6.png"
-            : "https://uploads-ssl.webflow.com/61d5fc96029694ef0cf8f249/644fcc6f17b2c36472c32fc2_SmartHQ%20Service%20Interface.png";
-        let buyLink;
-        if (monthly && company === "no") {
-          buyLink = "https://buy.stripe.com/6oE6s1fnVa7V7C04gt";
-        } else if (!monthly && company === "no") {
-          buyLink = "https://buy.stripe.com/4gw8A98Zx7ZN9K800a";
-        } else if (!monthly && company === "yes") {
-          buyLink = "https://buy.stripe.com/dR62bLb7F3Jx4pObIU";
-        } else {
-          buyLink = "www.google.com";
-        }
-        pricingTable.innerHTML = `
-                        <div class="pricing-col" style="border-color: #97D700;">
-                        <div class="pricing-img" style="background-image: url('${moduleImgSrc}');"></div>
-                        <h2>SmartHQ Service${
-                          module === "no" ? " + Module" : ""
-                        }</h2>
-                        <div style="font-size: 40px; margin-bottom: 20px; color: #97D700; font-weight: bold;">$${subscriptionPrice} ${
-          monthly ? "/month" : "/year"
-        }</div>
-                            ${
-                              module
-                                ? `<div style="font-size: 18px; margin-bottom: 20px;">*Excludes a one-time module cost of $${modulePrice}.</div>`
-                                : ""
-                            }
-                            <button class="btn" id="sButton" style="background-color: #64A70B;">Buy Now</button>
-                        </div>
-                        <div class="pricing-col" style="border-color: #97D700;">
-                            <div class="pricing-img" style="background-image: url('https://uploads-ssl.webflow.com/61d5fc96029694ef0cf8f249/64e1d1b844c35d76357a09f3_Service%20Module.png');"></div>
-                            <h2>Replacement Module</h2>
-                            <div style="font-size: 40px; margin-bottom: 20px; color: #97D700; font-weight: bold;">$${modulePrice}</div>
-                            <div style="font-size: 18px; margin-bottom: 20px;">Lost your Bluetooth module? Add an additional one.</div>
-                            <button class="btn" id="mButton" style="background-color: #64A70B;">Buy Now</button>
-                        </div>
-                        <div class="pricing-col" style="border-color: #97D700;">
-                            <div class="pricing-img" style="background-image: url('https://uploads-ssl.webflow.com/61d5fc96029694ef0cf8f249/6519b3c6af4f709c4a3e72f6_joint-enterprise-business-data-analysis.svg');"></div>
-                            <h2>Enterprise</h2>
-                            <div style="font-size: 40px; margin-bottom: 20px; color: #97D700; font-weight: bold;">Custom</div>
-                            <div style="font-size: 18px; margin-bottom: 20px;">Custom pricing for 10 accounts or more.</div>
-                            <a href="https://forms.smarthqpro.com/entreprise" ><button class="btn" style="background-color: #64A70B;">Contact Us</button></a>
-                        </div>
-                    `;
+function generateTable() {
+    let company = companySelect.value;
+    let module = moduleSelect.value;
+    let monthly = planSelect.value === "monthly";
+    let modulePrice = company === "yes" ? 99 : 199;
+    let subscriptionPrice = (company === "yes" ? 40 : 50) * (monthly ? 1 : 12);
+    let moduleImgSrc = module === "yes"
+        ? "https://uploads-ssl.webflow.com/61d5fc96029694ef0cf8f249/63ff0b4f20f51d2091c6f26a_SmartHQ%20Pro%20Interface-6.png"
+        : "https://uploads-ssl.webflow.com/61d5fc96029694ef0cf8f249/644fcc6f17b2c36472c32fc2_SmartHQ%20Service%20Interface.png";
 
-        document
-          .getElementById("sButton")
-          .addEventListener("click", function (event) {
-            event.preventDefault(); // Prevents default link behavior
-            let isModuleIncluded = module === "no";
-            let onlyModule = false;
-            let isAuthorized = validCode; //company === "yes";
-            let isYearly = !monthly;
-            openPopup(isModuleIncluded, isAuthorized, isYearly, onlyModule);
-          });
+    // Generate the HTML for the pricing table
+    pricingTable.innerHTML = `
+        <div class="pricing-col" style="border-color: #97D700;">
+            <div class="pricing-img" style="background-image: url('${moduleImgSrc}');"></div>
+            <h2>SmartHQ Service${module === "no" ? " + Module" : ""}</h2>
+            <div style="font-size: 40px; margin-bottom: 20px; color: #97D700; font-weight: bold;">
+                $${subscriptionPrice} ${monthly ? "/month" : "/year"}
+            </div>
+            ${module ? `<div style="font-size: 18px; margin-bottom: 20px;">*Excludes a one-time module cost of $${modulePrice}.</div>` : ""}
+            <button class="btn" id="sButton" style="background-color: #64A70B;">Buy Now</button>
+        </div>
+        <div class="pricing-col" style="border-color: #97D700;">
+            <div class="pricing-img" style="background-image: url('https://uploads-ssl.webflow.com/61d5fc96029694ef0cf8f249/64e1d1b844c35d76357a09f3_Service%20Module.png');"></div>
+            <h2>Replacement Module</h2>
+            <div style="font-size: 40px; margin-bottom: 20px; color: #97D700; font-weight: bold;">$${modulePrice}</div>
+            <div style="font-size: 18px; margin-bottom: 20px;">Lost your Bluetooth module? Add an additional one.</div>
+            <button class="btn" id="mButton" style="background-color: #64A70B;">Buy Now</button>
+        </div>
+        <div class="pricing-col" style="border-color: #97D700;">
+            <div class="pricing-img" style="background-image: url('https://uploads-ssl.webflow.com/61d5fc96029694ef0cf8f249/6519b3c6af4f709c4a3e72f6_joint-enterprise-business-data-analysis.svg');"></div>
+            <h2>Enterprise</h2>
+            <div style="font-size: 40px; margin-bottom: 20px; color: #97D700; font-weight: bold;">Custom</div>
+            <div style="font-size: 18px; margin-bottom: 20px;">Custom pricing for 10 accounts or more.</div>
+            <a href="https://forms.smarthqpro.com/entreprise"><button class="btn" style="background-color: #64A70B;">Contact Us</button></a>
+        </div>
+    `;
 
-updateModuleBuyLink();
-        
-        if (company === "yes" && !validCode) {
-          openAuthPopup();
-        }
-      }
+    // Attach event listener to the "Buy Now" button for SmartHQ Service
+    document.getElementById("sButton").addEventListener("click", function (event) {
+        event.preventDefault();
+        let isModuleIncluded = module === "no";
+        let onlyModule = false;
+        let isAuthorized = validCode;
+        let isYearly = !monthly;
+        openPopup(isModuleIncluded, isAuthorized, isYearly, onlyModule);
+    });
+
+    // Update the event listener for the "Buy Now" button of the replacement module
+    updateModuleBuyLink();
+}
+
+function updateModuleBuyLink() {
+
+}
 
       async function serviceAPI() {
         let code = document.getElementById("code").value;
