@@ -13,6 +13,7 @@
         font-family: "Poppins", sans-serif;
         background-color: #f4f4f4;
         margin: 0;
+        padding: 20px;
       }
       select {
         padding: 8px 16px;
@@ -273,30 +274,30 @@
         }
       }
 
-      function updateModuleBuyLink() {
-        let isAuthorized = validCode; // Determine authorization status
-        let buyNowLink = isAuthorized
-          ? "https://buy.stripe.com/eVa5nX1x5dk74pObJ2" // Link for authorized users
-          : "https://buy.stripe.com/7sI6s17VtbbZbSgfZh"; // Link for non-authorized users
+      // function updateModuleBuyLink() {
+      //   let isAuthorized = validCode; // Determine authorization status
+      //   let buyNowLink = isAuthorized
+      //     ? "https://buy.stripe.com/eVa5nX1x5dk74pObJ2" // Link for authorized users
+      //     : "https://buy.stripe.com/7sI6s17VtbbZbSgfZh"; // Link for non-authorized users
 
-        // Get the "Buy Now" button for the replacement module
-        let buyNowButton = document.getElementById("mButton");
+      //   // Get the "Buy Now" button for the replacement module
+      //   let buyNowButton = document.getElementById("mButton");
 
-        if (buyNowButton) {
-          if (buyNowButtonClickListener) {
-            buyNowButton.removeEventListener(
-              "click",
-              buyNowButtonClickListener
-            );
-          }
+      //   if (buyNowButton) {
+      //     if (buyNowButtonClickListener) {
+      //       buyNowButton.removeEventListener(
+      //         "click",
+      //         buyNowButtonClickListener
+      //       );
+      //     }
 
-          buyNowButtonClickListener = function (event) {
-            event.preventDefault(); // Prevent default button behavior
-            window.location.href = buyNowLink; // Redirect to the Stripe link
-          };
-          buyNowButton.addEventListener("click", buyNowButtonClickListener);
-        }
-      }
+      //     buyNowButtonClickListener = function (event) {
+      //       event.preventDefault(); // Prevent default button behavior
+      //       window.location.href = buyNowLink; // Redirect to the Stripe link
+      //     };
+      //     buyNowButton.addEventListener("click", buyNowButtonClickListener);
+      //   }
+      // }
 
       function openAuthPopup(isModuleIncluded, isAuthorized, isYearly) {
         popupContect.innerHTML = `<h3>Input your Service Number</h3><input id="code" type="text" placeholder="Authorized Service Number"><span id="errorSpan" class="error"></span><div class="popup-button-div"><button id="submit">Submit</button><button id="cancel" style="background-color: black;">Cancel</button></ div>`;
@@ -379,11 +380,12 @@
             openPopup(isModuleIncluded, isAuthorized, isYearly, onlyModule);
           });
 
-        // Update the event listener for the "Buy Now" button of the replacement module
-        updateModuleBuyLink();
+        if (company === "yes" && !validCode) {
+          openAuthPopup();
+        }
+
       }
 
-      function updateModuleBuyLink() {}
 
       async function serviceAPI() {
         let code = document.getElementById("code").value;
@@ -436,11 +438,7 @@
           });
       }
       moduleSelect.addEventListener("change", generateTable);
-      companySelect.addEventListener("change", function () {
-        validCode = this.value === "yes"; // Update based on new selection
-        updateModuleBuyLink(); // Update the Buy Now link
-        generateTable(); // Call generateTable if needed
-      });
+      companySelect.addEventListener("change", generateTable);
       planSelect.addEventListener("change", generateTable);
 
       document
