@@ -173,9 +173,9 @@
 
       .popup #cancel,
       .popup #submit {
-        width: 120px;
+        width: 150px;
         border-radius: 4px;
-        height: 40px;
+        height: 50px;
       }
 
       .popup #errorSpan {
@@ -328,7 +328,7 @@
         let monthly = planSelect.value === "monthly";
         let modulePrice = company === "yes" ? 99 : 199;
         let subscriptionPrice =
-          (company === "yes" ? 40 : 50) * (monthly ? 1 : 12);
+          (company === "yes" ? 45 : 55) * (monthly ? 1 : 12);
         let moduleImgSrc =
           module === "yes"
             ? "https://uploads-ssl.webflow.com/61d5fc96029694ef0cf8f249/63ff0b4f20f51d2091c6f26a_SmartHQ%20Pro%20Interface-6.png"
@@ -346,7 +346,7 @@
                       $${subscriptionPrice} ${monthly ? "/month" : "/year"}
                   </div>
                   ${
-                    module
+                    module === "no"
                       ? `<div style="font-size: 18px; margin-bottom: 20px;">*Excludes a one-time module cost of $${modulePrice}.</div>`
                       : ""
                   }
