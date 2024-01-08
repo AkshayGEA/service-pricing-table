@@ -39,6 +39,9 @@
     display: inline-block;
     margin-right: 20px;
   }
+  .dropdown-block {
+    margin-bottom: 10px; 
+}
   .pricing-table {
     display: flex;
     justify-content: space-between;
@@ -232,22 +235,31 @@
   </head>
   <body>
     <div class="dropdown-container">
-      <div class="dropdown-label">Have a Module?</div>
-      <select id="moduleSelect">
-        <option value="no" selected>No</option>
-        <option value="yes">Yes</option>
-      </select>
-      <div class="dropdown-label">Are you an Authorized GEA Company?</div>
-      <select id="companySelect">
-        <option value="no" selected>Non-Authorized</option>
-        <option value="yes">Authorized</option>
-      </select>
-      <div class="dropdown-label">Plan Duration:</div>
-      <select id="planSelect">
-        <option value="monthly">Monthly</option>
-        <option value="yearly" selected>Yearly</option>
-      </select>
+        <div class="dropdown-block">
+            <div class="dropdown-label">Have a Module?</div>
+            <select id="moduleSelect">
+                <option value="no" selected>No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+
+        <div class="dropdown-block">
+            <div class="dropdown-label">Are you an Authorized GEA Company?</div>
+            <select id="companySelect">
+                <option value="no" selected>Non-Authorized</option>
+                <option value="yes">Authorized</option>
+            </select>
+        </div>
+
+        <div class="dropdown-block">
+            <div class="dropdown-label">Plan Duration:</div>
+            <select id="planSelect">
+                <option value="monthly">Monthly</option>
+                <option value="yearly" selected>Yearly</option>
+            </select>
+        </div>
     </div>
+</body>
 
     <!-- Pricing Table -->
     <div class="pricing-table" id="pricingTable"></div>
