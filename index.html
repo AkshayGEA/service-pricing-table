@@ -414,7 +414,7 @@
     document.querySelector(".svcPtlPopup-overlay").style.display = "none";
   }
 
-  function generateTable() {
+ function generateTable() {
     let company = companySelect.value;
     let module = moduleSelect.value;
     let monthly = planSelect.value === "monthly";
@@ -426,8 +426,11 @@
         subscriptionPrice = company === "yes" ? 45 : 55;
     } else {
         // Yearly pricing
-        subscriptionPrice = company === "yes" ? 480 : 600;
-    }
+        if (company === "yes") {
+            subscriptionPrice = 480; // Authorized yearly price
+        } else {
+            subscriptionPrice = 600; // Non-authorized yearly price
+        }
     
     let moduleImgSrc =
       module === "yes"
