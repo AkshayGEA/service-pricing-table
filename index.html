@@ -80,6 +80,7 @@
     .pricing-img {
       width: 100%;
       height: auto;
+      min-height: 100px;
       /* Responsive height */
       background-size: contain;
       background-repeat: no-repeat;
@@ -127,7 +128,7 @@
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       z-index: 1000;
       width: 100%;
-      max-width: 300px;
+      max-width: 350px;
       min-width: 200px;
       text-align: center;
     }
@@ -228,7 +229,7 @@
       }
     }
 
-    @media screen and (max-width: 900px) and (orientation: landscape) {
+    @media screen and (min-width: 601) and (max-width: 900px) {
 
       /* Adjustments for mobile landscape */
       .pricing-col {
@@ -237,29 +238,32 @@
       }
     }
 
-    @media screen and (max-width: 1024px) {
+    @media screen and (min-width: 901px) and (max-width: 1024px) {
 
       /* Adjustments for tablets */
       .pricing-col {
-        flex-basis: 50%;
+        /* flex-basis: 50%; */
+        flex: 1;
         /* Two columns on tablet */
       }
     }
 
-    @media screen and (min-width: 768px) {
+    /* @media screen and (min-width: 768px) { */
 
       /* Targeting tablets and up */
-      .pricing-col {
-        flex: 0 1 calc(50% - 20px);
+      /* .pricing-col { */
+        /* flex: 1; */
+        /* flex: 0 1 calc(50% - 20px); */
         /* Two columns with margin accounted for */
-      }
-    }
+      /* } */
+    /* } */
 
     @media screen and (min-width: 1025px) {
 
       /* Adjustments for laptops and desktops */
       .pricing-col {
-        flex-basis: 33.33%;
+        /* flex-basis: 33.33%; */
+        flex: 1;
         /* Three columns on larger screens */
       }
     }
