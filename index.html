@@ -45,6 +45,9 @@
       margin-bottom: 20px;
       margin-right: 20px;
     }
+    .svcPtlPopup-hidden {
+  display: none;
+}
 
     .pricing-table {
       display: flex;
@@ -289,14 +292,14 @@
       </select>
     </div>
 
-    <div class="dropdown-block">
-      <div class="dropdown-label">Plan Duration:</div>
-      <select id="planSelect">
-        <option value="monthly">Monthly</option>
-        <option value="yearly" selected>Yearly</option>
-      </select>
-    </div>
-  </div>
+<div class="dropdown-block">
+  <div class="dropdown-label">Plan Duration:</div>
+  <select id="planSelect">
+    <option value="monthly">Monthly</option>
+    <option value="yearly" selected>Yearly</option>
+  </select>
+  <span id="infoIcon" style="cursor: pointer;">ℹ️</span>
+</div>
 </body>
 
 <!-- Pricing Table -->
@@ -361,9 +364,16 @@
 
     if (!isYearly) {
       document.getElementById("partsAccountButton").disabled = true;
-      document.getElementById("partsAccountButton").title =
-        "Note: Please note for subscription purchases, we currently offer only yearly billing plans through a GE Appliances account. For monthly billing plans, we kindly request you to proceed with the purchase using a credit card through our secure Stripe portal.";
-    }
+    document.getElementById("infoIcon").addEventListener("click", function() {
+  let popup = document.querySelector(".svcPtlPopup");
+  if (popup.classList.contains("svcPtlPopup-hidden")) {
+    popup.classList.remove("svcPtlPopup-hidden");
+    popup.innerHTML = `Please note for subscription purchases, we currently offer only yearly billing plans through a GE Appliances account. For monthly billing plans, we kindly request you to proceed with the purchase using a credit card through our secure Stripe portal.`;
+  } else {
+    popup.classList.add("svcPtlPopup-hidden");
+  }
+});
+
   }
 
   // function updateModuleBuyLink() {
@@ -551,6 +561,12 @@ function generateTable() {
     .querySelector(".svcPtlPopup-overlay")
     .addEventListener("click", closePopup);
 
+  window.onload = function() {
+  generateTable();
+  document.querySelector(".svcPtlPopup").classList.add("svcPtlPopup-hidden");
+  // Existing window.onload code (if any) goes here
+};
+
   window.onload = generateTable();
   window.addEventListener("pageshow", function (event) {
     console.log(event);
@@ -562,6 +578,7 @@ function generateTable() {
       generateTable();
     }
   });
+  
 </script>
 </body>
 
