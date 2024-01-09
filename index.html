@@ -419,8 +419,12 @@
     let module = moduleSelect.value;
     let monthly = planSelect.value === "monthly";
     let modulePrice = company === "yes" ? 99 : 199;
-    let subscriptionPrice =
-      (company === "yes" ? 45 : 55) * (monthly ? 1 : 12);
+    let subscriptionPrice;
+    if (monthly) {
+        subscriptionPrice = company === "yes" ? 45 : 55;
+    } else {
+        subscriptionPrice = company === "yes" ? 480 : 600;
+    }
     let moduleImgSrc =
       module === "yes"
         ? "https://uploads-ssl.webflow.com/61d5fc96029694ef0cf8f249/63ff0b4f20f51d2091c6f26a_SmartHQ%20Pro%20Interface-6.png"
