@@ -422,10 +422,8 @@ function generateTable() {
     let subscriptionPrice;
 
     if (monthly) {
-        // Monthly pricing remains the same
         subscriptionPrice = company === "yes" ? 45 : 55;
-    } else {
-        // Yearly pricing
+    if (yearly) {
         if (company === "yes") {
             subscriptionPrice = 480; // Authorized yearly price
         } else {
