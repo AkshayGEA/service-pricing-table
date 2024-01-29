@@ -75,19 +75,23 @@
       margin: 10px;
       flex: 0 1 100%;
     }
-    .discount-tag {
+
+    .discount-button {
   background-color: green; 
-  color: white;  
-  text-align: center;   
-  padding: 5px;         
-  border-radius: 5px 5px 0 0;
-  font-size: 14px;      
-  font-weight: bold;  
-  position: absolute;    
-  top: 0; 
-  left: 0;                
-  width: 100%;        
+  color: white; 
+  border: none; 
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 14px; 
+  font-weight: bold;
+  cursor: pointer;     
+  margin-top: 10px;  
+  width: auto;       
+  display: block; 
+  margin-left: auto;
+  margin-right: auto; 
 }
+
 
     .pricing-col:hover {
       border-color: rgba(0, 0, 0, 0.3);
@@ -475,7 +479,7 @@
         // Generate the HTML for the pricing table
         pricingTable.innerHTML = `
               <div class="pricing-col" style="border-color: #97D700;">
-              <div class="discount-tag">10% off on yearly plan</div>
+              <button class="discount-button">10% off on yearly plan</button>
                   <div class="pricing-img" style="background-image: url('${moduleImgSrc}');"></div>
                   <h2>SmartHQ Service${module === "no" ? " + Module" : ""}</h2>
                   <div style="font-size: 40px; margin-bottom: 20px; color: #97D700; font-weight: bold;">
