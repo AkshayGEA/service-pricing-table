@@ -75,6 +75,19 @@
       margin: 10px;
       flex: 0 1 100%;
     }
+    .discount-tag {
+  background-color: green; 
+  color: white;  
+  text-align: center;   
+  padding: 5px;         
+  border-radius: 5px 5px 0 0;
+  font-size: 14px;      
+  font-weight: bold;  
+  position: absolute;    
+  top: 0; 
+  left: 0;                
+  width: 100%;        
+}
 
     .pricing-col:hover {
       border-color: rgba(0, 0, 0, 0.3);
@@ -462,6 +475,7 @@
         // Generate the HTML for the pricing table
         pricingTable.innerHTML = `
               <div class="pricing-col" style="border-color: #97D700;">
+              <div class="discount-tag">10% off on yearly plan</div>
                   <div class="pricing-img" style="background-image: url('${moduleImgSrc}');"></div>
                   <h2>SmartHQ Service${module === "no" ? " + Module" : ""}</h2>
                   <div style="font-size: 40px; margin-bottom: 20px; color: #97D700; font-weight: bold;">
@@ -484,7 +498,7 @@
                   <div class="pricing-img" style="background-image: url('https://uploads-ssl.webflow.com/61d5fc96029694ef0cf8f249/6519b3c6af4f709c4a3e72f6_joint-enterprise-business-data-analysis.svg');"></div>
                   <h2>Enterprise</h2>
                   <div style="font-size: 40px; margin-bottom: 20px; color: #97D700; font-weight: bold;">Custom</div>
-                  <div style="font-size: 18px; margin-bottom: 20px;">Custom pricing for 10 accounts or more.</div>
+                  <div style="font-size: 18px; margin-bottom: 20px;">Special pricing available for 10 accounts or more.</div>
                   <a href="https://forms.smarthqpro.com/entreprise"><button class="btn" style="background-color: #64A70B;">Contact Us</button></a>
               </div>
           `;
