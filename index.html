@@ -46,10 +46,6 @@
       margin-right: 20px;
     }
 
-    .svcPtlPopup-hidden {
-      display: none;
-    }
-
     .pricing-table {
       display: flex;
       justify-content: space-between;
@@ -136,99 +132,9 @@
       background-color: green;
     }
 
-    .svcPtlPopup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #333;
-      color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      z-index: 1000;
-      width: 100%;
-      max-width: 350px;
-      min-width: 200px;
-      text-align: center;
-    }
-
-
     a {
       text-decoration: none;
-    }
-
-    .svcPtlPopup button {
-      padding: 8px 16px;
-      margin: 10px 0;
-      border: none;
-      background-color: #64a70b;
-      color: #fff;
-      border-radius: 4px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background-color 0.3s ease-in-out;
-      width: 80%;
-      /* Button width */
-      text-align: center;
-      display: block;
-      cursor: pointer;
-      /* Cursor style */
-    }
-
-    .svcPtlPopup button:hover {
-      background-color: green;
-      /* Hover effect */
-    }
-
-    .svcPtlPopup button:disabled {
-      background-color: grey;
-      /* Hover effect */
-    }
-
-    .svcPtlPopup input {
-      width: 100%;
-      height: 30px;
-      padding: 8px 16px;
-      font-size: 16px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      margin-left: 10px;
-      cursor: pointer;
-      background: #ffffff;
-      color: #000;
-      width: auto;
-      display: inline-block;
-    }
-
-    .svcPtlPopup-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-      color: #fff;
-      /* Close button color */
-      font-size: 20px;
-      /* Close button size */
-    }
-
-    .svcPtlPopup #cancel,
-    .svcPtlPopup #submit {
-      width: 150px;
-      border-radius: 4px;
-      height: 50px;
-    }
-
-    .svcPtlPopup #errorSpan {
-      color: red;
-    }
-
-    .svcPtlPopup-button-div {
-      display: flex;
-      justify-content: space-around;
-    }
-
+    } 
     /* Responsive Styles */
     @media screen and (max-width: 600px) {
       body {
@@ -322,11 +228,6 @@
 
     <!-- Pricing Table -->
     <div class="pricing-table" id="pricingTable"></div>
-    <div class="svcPtlPopup-overlay"></div>
-    <div class="svcPtlPopup">
-      <div class="svcPtlPopup-close">X</div>
-      <div class="svcPtlPopup-content" id="svcPtlPopupContect"></div>
-    </div>
     <script>
       let buyNowButtonClickListener;
       let moduleSelect = document.getElementById("moduleSelect");
@@ -336,70 +237,7 @@
       let popupContect = document.getElementById("svcPtlPopupContect");
       let validCode = false;
 
-      function openPopup(isModuleIncluded, isAuthorized, isYearly, onlyModule) {
-        // Determine the correct links based on the user's selections
-        let partsLink = isAuthorized
-          ? "https://forms.smarthqpro.com/aparts"
-          : "https://forms.smarthqpro.com/parts";
-        let creditCardLink;
-        if (onlyModule) {
-          creditCardLink = isAuthorized
-            ? "https://buy.stripe.com/eVa5nX1x5dk74pObJ2"
-            : "https://buy.stripe.com/7sI6s17VtbbZbSgfZh";
-        } else if (isModuleIncluded) {
-          if (isYearly && isAuthorized) {
-            creditCardLink = "https://buy.stripe.com/dR62bLb7F3Jx4pObIU";
-          } else if (isYearly && !isAuthorized) {
-            creditCardLink = "https://buy.stripe.com/4gw8A98Zx7ZN9K800a";
-          } else if (!isYearly && isAuthorized) {
-            creditCardLink = "https://buy.stripe.com/28o6s1grZ2Ft4pOcN4";
-          } else {
-            creditCardLink = "https://buy.stripe.com/6oE6s1fnVa7V7C04gt";
-          }
-        } else {
-          if (isYearly && isAuthorized) {
-            creditCardLink = "https://buy.stripe.com/eVaaIhb7FeobbSgfZl";
-          } else if (isYearly && !isAuthorized) {
-            creditCardLink = "https://buy.stripe.com/fZebMlb7Ffsf9K89AV";
-          } else if (!isYearly && isAuthorized) {
-            creditCardLink = "https://buy.stripe.com/eVa2bL2B96VJ8G4dRe";
-          } else {
-            creditCardLink = "https://buy.stripe.com/00g8A98Zxdk71dC4gC";
-          }
-        }
-
-        popupContect.innerHTML = `<h3>Payment Options</h3><a id="creditCard"><button id="creditCard">Pay by Credit Card</button></a><a id="partsAccount"><button id="partsAccountButton">Pay by GE Appliance Account</button></ a>`;
-
-        // Update the popup with the correct links
-        document
-          .getElementById("creditCard")
-          .setAttribute("href", creditCardLink);
-        document.getElementById("partsAccount").setAttribute("href", partsLink);
-
-        // Display the popup
-        document.querySelector(".svcPtlPopup").style.display = "block";
-        document.querySelector(".svcPtlPopup-overlay").style.display = "block";
-
-        if (!isYearly) {
-          document.getElementById("partsAccountButton").disabled = true;
-          document.getElementById("partsAccountButton").title =
-            "Note: Please note for subscription purchases, we currently offer only yearly billing plans through a GE Appliances account. For monthly billing plans, we kindly request you to proceed with the purchase using a credit card through our secure Stripe portal.";
-        }
-        // document.getElementById("infoIcon").addEventListener("click", function () {
-        //   let popup = document.querySelector(".svcPtlPopup");
-        //   // if (popup.classList.contains("svcPtlPopup-hidden")) {
-        //     // popup.classList.remove("svcPtlPopup-hidden");
-        //     popup.innerHTML = `Please note for subscription purchases, we currently offer only yearly billing plans through a GE Appliances account. For monthly billing plans, we kindly request you to proceed with the purchase using a credit card through our secure Stripe portal.`;
-        //     document.querySelector(".svcPtlPopup").style.display = "block";
-        //     document.querySelector(".svcPtlPopup-overlay").style.display = "block";
-
-
-        //   // } else {
-        //     // popup.classList.add("svcPtlPopup-hidden");
-        //   // }
-        // });
-
-      }
+      
 
       // function updateModuleBuyLink() {
       //   let isAuthorized = validCode; // Determine authorization status
@@ -434,20 +272,7 @@
         document.getElementById("submit").addEventListener("click", serviceAPI);
         errorSpan.style.display = "none";
 
-        // Display the popup
-        document.querySelector(".svcPtlPopup").style.display = "block";
-        document.querySelector(".svcPtlPopup-overlay").style.display = "block";
-      }
-
-      function closePopup() {
-        if (!validCode && companySelect.value === "yes") {
-          companySelect.value = "no";
-          let event = new Event("change");
-          companySelect.dispatchEvent(event);
-        }
-        document.querySelector(".svcPtlPopup").style.display = "none";
-        document.querySelector(".svcPtlPopup-overlay").style.display = "none";
-      }
+      
 
       function generateTable() {
         let company = companySelect.value;
@@ -467,6 +292,39 @@
             subscriptionPrice = 600; // Non-authorized yearly price
           }
         }
+    let company = companySelect.value;
+    let module = moduleSelect.value;
+    let plan = planSelect.value;
+    let stripeLink;
+
+    // Determine the correct Stripe link
+    if (module === "no" && company === "no" && plan === "yearly") {
+        stripeLink = "https://buy.stripe.com/4gw8A98Zx7ZN9K800a";
+    } else if (module === "yes" && company === "no" && plan === "yearly") {
+        stripeLink = "https://buy.stripe.com/fZebMlb7Ffsf9K89AV";
+    } else if (module === "no" && company === "yes" && plan === "yearly") {
+        stripeLink = "https://buy.stripe.com/dR62bLb7F3Jx4pObIU";
+    } else if (module === "yes" && company === "yes" && plan === "yearly") {
+        stripeLink = "https://buy.stripe.com/eVaaIhb7FeobbSgfZl";
+    } else if (module === "no" && company === "no" && plan === "monthly") {
+        stripeLink = "https://buy.stripe.com/6oE6s1fnVa7V7C04gt";
+    } else if (module === "yes" && company === "no" && plan === "monthly") {
+        stripeLink = "https://buy.stripe.com/00g8A98Zxdk71dC4gC";
+    } else if (module === "no" && company === "yes" && plan === "monthly") {
+        stripeLink = "https://checkout.stripe.com/c/pay/cs_live_b1a...";
+    } else if (module === "yes" && company === "yes" && plan === "monthly") {
+        stripeLink = "https://checkout.stripe.com/c/pay/cs_live_b13...";
+    }
+
+    // Use stripeLink for the "Buy Now" button's click event
+    let buyNowButton = document.getElementById("sButton");
+    if (buyNowButton) {
+        buyNowButton.onclick = function() {
+            window.location.href = stripeLink;
+        };
+    }
+}
+
 
         let moduleImgSrc =
           module === "yes"
@@ -590,7 +448,6 @@
 
       // window.onload = function () {
       //   generateTable();
-      //   document.querySelector(".svcPtlPopup").classList.add("svcPtlPopup-hidden");
       //   // Existing window.onload code (if any) goes here
       // };
 
