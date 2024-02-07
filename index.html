@@ -455,6 +455,28 @@
         let monthly = planSelect.value === "monthly";
         let modulePrice = company === "yes" ? 99 : 199;
         let subscriptionPrice;
+        let creditCardLink;
+        if (module === "no") {
+          if (!monthly && validCode) {
+            creditCardLink = "https://buy.stripe.com/dR62bLb7F3Jx4pObIU";
+          } else if (!monthly && !validCode) {
+            creditCardLink = "https://buy.stripe.com/4gw8A98Zx7ZN9K800a";
+          } else if (monthly && validCode) {
+            creditCardLink = "https://buy.stripe.com/28o6s1grZ2Ft4pOcN4";
+          } else {
+            creditCardLink = "https://buy.stripe.com/6oE6s1fnVa7V7C04gt";
+          }
+        } else {
+          if (!monthly && validCode) {
+            creditCardLink = "https://buy.stripe.com/eVaaIhb7FeobbSgfZl";
+          } else if (!monthly && !validCode) {
+            creditCardLink = "https://buy.stripe.com/fZebMlb7Ffsf9K89AV";
+          } else if (monthly && validCode) {
+            creditCardLink = "https://buy.stripe.com/eVa2bL2B96VJ8G4dRe";
+          } else {
+            creditCardLink = "https://buy.stripe.com/00g8A98Zxdk71dC4gC";
+          }
+        }
 
         if (monthly) {
           // Monthly pricing remains the same
@@ -486,10 +508,10 @@
                       $${subscriptionPrice} ${monthly ? "/month" : "/year"}
                   </div>
                   ${module === "no"
-            ? `<div style="font-size: 18px; margin-bottom: 20px;">*Excludes a one-time module cost of $${modulePrice}.</div>`
-            : ""
-          }
-                  <button class="btn" id="sButton" style="background-color: #64A70B;">Buy Now</button>
+                    ? `<div style="font-size: 18px; margin-bottom: 20px;">*Excludes a one-time module cost of $${modulePrice}.</div>`
+                    : ""
+                  }
+                  <a href="${creditCardLink}"><button class="btn" id="sButton" style="background-color: #64A70B;">Buy Now</button></a>
               </div>
               <div class="pricing-col" style="border-color: #97D700;">
                   <div class="pricing-img" style="background-image: url('https://uploads-ssl.webflow.com/61d5fc96029694ef0cf8f249/64e1d1b844c35d76357a09f3_Service%20Module.png');"></div>
@@ -508,16 +530,16 @@
           `;
 
         // Attach event listener to the "Buy Now" button for SmartHQ Service
-        document
-          .getElementById("sButton")
-          .addEventListener("click", function (event) {
-            event.preventDefault();
-            let isModuleIncluded = module === "no";
-            let onlyModule = false;
-            let isAuthorized = validCode;
-            let isYearly = !monthly;
-            openPopup(isModuleIncluded, isAuthorized, isYearly, onlyModule);
-          });
+        // document
+        //   .getElementById("sButton")
+        //   .addEventListener("click", function (event) {
+        //     event.preventDefault();
+        //     let isModuleIncluded = module === "no";
+        //     let onlyModule = false;
+        //     let isAuthorized = validCode;
+        //     let isYearly = !monthly;
+        //     openPopup(isModuleIncluded, isAuthorized, isYearly, onlyModule);
+        //   });
 
         if (company === "yes" && !validCode) {
           openAuthPopup();
