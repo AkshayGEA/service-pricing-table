@@ -385,46 +385,8 @@
           document.getElementById("partsAccountButton").title =
             "Note: Please note for subscription purchases, we currently offer only yearly billing plans through a GE Appliances account. For monthly billing plans, we kindly request you to proceed with the purchase using a credit card through our secure Stripe portal.";
         }
-        // document.getElementById("infoIcon").addEventListener("click", function () {
-        //   let popup = document.querySelector(".svcPtlPopup");
-        //   // if (popup.classList.contains("svcPtlPopup-hidden")) {
-        //     // popup.classList.remove("svcPtlPopup-hidden");
-        //     popup.innerHTML = `Please note for subscription purchases, we currently offer only yearly billing plans through a GE Appliances account. For monthly billing plans, we kindly request you to proceed with the purchase using a credit card through our secure Stripe portal.`;
-        //     document.querySelector(".svcPtlPopup").style.display = "block";
-        //     document.querySelector(".svcPtlPopup-overlay").style.display = "block";
-
-
-        //   // } else {
-        //     // popup.classList.add("svcPtlPopup-hidden");
-        //   // }
-        // });
 
       }
-
-      // function updateModuleBuyLink() {
-      //   let isAuthorized = validCode; // Determine authorization status
-      //   let buyNowLink = isAuthorized
-      //     ? "https://buy.stripe.com/eVa5nX1x5dk74pObJ2" // Link for authorized users
-      //     : "https://buy.stripe.com/7sI6s17VtbbZbSgfZh"; // Link for non-authorized users
-
-      //   // Get the "Buy Now" button for the replacement module
-      //   let buyNowButton = document.getElementById("mButton");
-
-      //   if (buyNowButton) {
-      //     if (buyNowButtonClickListener) {
-      //       buyNowButton.removeEventListener(
-      //         "click",
-      //         buyNowButtonClickListener
-      //       );
-      //     }
-
-      //     buyNowButtonClickListener = function (event) {
-      //       event.preventDefault(); // Prevent default button behavior
-      //       window.location.href = buyNowLink; // Redirect to the Stripe link
-      //     };
-      //     buyNowButton.addEventListener("click", buyNowButtonClickListener);
-      //   }
-      // }
 
       function openAuthPopup(isModuleIncluded, isAuthorized, isYearly) {
         popupContect.innerHTML = `<h3>Input your Service Number</h3><input id="code" type="text" placeholder="Authorized Service Number"><span id="errorSpan" class="error"></span><div class="svcPtlPopup-button-div"><button id="submit">Submit</button><button id="cancel" style="background-color: black;">Cancel</button></ div>`;
@@ -438,6 +400,19 @@
         document.querySelector(".svcPtlPopup").style.display = "block";
         document.querySelector(".svcPtlPopup-overlay").style.display = "block";
       }
+
+      function openRedirectionPopup(creditCardLink) {
+        popupContect.innerHTML = `<h1 style="text-align:center;"><strong>Already a Customer?</strong></h1><p style="text-align:left;">To add this purchase to your account, please access your customer portal by clicking <a target="_blank" rel="noopener noreferrer" href="https://portal.smarthqpro.com">HERE</a>.<br>If you're new here, please click the '<span style="color:hsl( 86, 88%, 35% );"><strong>Continue</strong></span>' button below to finalize your purchase.</p><a href="${creditCardLink}"><div style="text:-align center;"><button class="btn" id="continueButton" style="background-color: #64A70B; width: 100%">Continue</button></a></div>`;
+
+        // Update the popup with the correct links
+        // document.getElementById("submit").addEventListener("click", serviceAPI);
+        // errorSpan.style.display = "none";
+
+        // Display the popup
+        document.querySelector(".svcPtlPopup").style.display = "block";
+        document.querySelector(".svcPtlPopup-overlay").style.display = "block";
+      }
+
 
       function closePopup() {
         if (!validCode && companySelect.value === "yes") {
@@ -498,6 +473,9 @@
           ? "https://buy.stripe.com/eVa5nX1x5dk74pObJ2"
           : "https://buy.stripe.com/7sI6s17VtbbZbSgfZh";
 
+          
+
+        
         // Generate the HTML for the pricing table
         pricingTable.innerHTML = `
               <div class="pricing-col" style="border-color: #97D700;">
@@ -511,15 +489,9 @@
                     ? `<div style="font-size: 18px; margin-bottom: 20px;">*Excludes a one-time module cost of $${modulePrice}.</div>`
                     : ""
                   }
-                  <a href="${creditCardLink}"><button class="btn" id="sButton" style="background-color: #64A70B;">Buy Now</button></a>
+                  <button class="btn" id="sButton" style="background-color: #64A70B;" onclick='openRedirectionPopup("${creditCardLink}");' >Buy Now</button>
               </div>
-              <div class="pricing-col" style="border-color: #97D700;">
-                  <div class="pricing-img" style="background-image: url('https://uploads-ssl.webflow.com/61d5fc96029694ef0cf8f249/64e1d1b844c35d76357a09f3_Service%20Module.png');"></div>
-                  <h2>Replacement Module</h2>
-                  <div style="font-size: 40px; margin-bottom: 20px; color: #97D700; font-weight: bold;">$${modulePrice}</div>
-                  <div style="font-size: 18px; margin-bottom: 20px;">Lost your Bluetooth module? Add an additional one.</div>
-                  <a href="${replacementModuleLink}"><button class="btn" id="mButton" style="background-color: #64A70B;">Buy Now</button></a>
-              </div>
+              
               <div class="pricing-col" style="border-color: #97D700;">
                   <div class="pricing-img" style="background-image: url('https://uploads-ssl.webflow.com/61d5fc96029694ef0cf8f249/6519b3c6af4f709c4a3e72f6_joint-enterprise-business-data-analysis.svg');"></div>
                   <h2>Enterprise</h2>
@@ -528,18 +500,9 @@
                   <a href="https://forms-fld.smarthqpro.com/contact"><button class="btn" style="background-color: #64A70B;">Contact Us</button></a>
               </div>
           `;
+          // document.getElementById("sButton").addEventListener('click', openRedirectionPopup(creditCardLink),false)
 
-        // Attach event listener to the "Buy Now" button for SmartHQ Service
-        // document
-        //   .getElementById("sButton")
-        //   .addEventListener("click", function (event) {
-        //     event.preventDefault();
-        //     let isModuleIncluded = module === "no";
-        //     let onlyModule = false;
-        //     let isAuthorized = validCode;
-        //     let isYearly = !monthly;
-        //     openPopup(isModuleIncluded, isAuthorized, isYearly, onlyModule);
-        //   });
+          
 
         if (company === "yes" && !validCode) {
           openAuthPopup();
@@ -609,12 +572,6 @@
       document
         .querySelector(".svcPtlPopup-overlay")
         .addEventListener("click", closePopup);
-
-      // window.onload = function () {
-      //   generateTable();
-      //   document.querySelector(".svcPtlPopup").classList.add("svcPtlPopup-hidden");
-      //   // Existing window.onload code (if any) goes here
-      // };
 
       window.onload = generateTable();
       window.addEventListener("pageshow", function (event) {
